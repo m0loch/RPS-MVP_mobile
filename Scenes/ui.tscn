@@ -1,0 +1,49 @@
+[gd_scene load_steps=3 format=3 uid="uid://uw3ilvepofj"]
+
+[ext_resource type="FontFile" uid="uid://bxlvtv04rwuyf" path="res://Assets/Retro Gaming.ttf" id="1_k1snr"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sy5u4"]
+bg_color = Color(0.384314, 0.658824, 0.635294, 1)
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Login" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -250.0
+offset_right = 250.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_sy5u4")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Login"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 50
+
+[node name="Label" type="Label" parent="Login/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 5
+theme_override_fonts/font = ExtResource("1_k1snr")
+theme_override_font_sizes/font_size = 40
+text = "MEGAPLACEHOLDER"
+
+[node name="Button" type="Button" parent="Login/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_k1snr")
+text = "OK"
