@@ -1,14 +1,165 @@
-[gd_scene load_steps=2 format=3 uid="uid://b34rxseti5e68"]
+[gd_scene load_steps=4 format=3 uid="uid://uw3ilvepofj"]
 
-[ext_resource type="PackedScene" uid="uid://uw3ilvepofj" path="res://Scenes/ui.tscn" id="1_r01kp"]
+[ext_resource type="Script" path="res://Scripts/main/FirebaseManager.gd" id="1_k0mp2"]
+[ext_resource type="FontFile" uid="uid://bxlvtv04rwuyf" path="res://Assets/Retro Gaming.ttf" id="1_yxrsx"]
 
-[node name="Main" type="Node2D"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sy5u4"]
+content_margin_left = 20.0
+content_margin_top = 20.0
+content_margin_right = 20.0
+content_margin_bottom = 20.0
+bg_color = Color(0.384314, 0.658824, 0.635294, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_blend = true
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_color = Color(0, 0, 0, 1)
+shadow_size = 4
+shadow_offset = Vector2(2, 2)
+anti_aliasing = false
 
-[node name="Control" parent="." instance=ExtResource("1_r01kp")]
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FirebaseManager" type="Node" parent="."]
+script = ExtResource("1_k0mp2")
+
+[node name="Main" type="PanelContainer" parent="."]
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-size_flags_horizontal = 6
-size_flags_vertical = 6
+offset_left = -287.5
+offset_top = -80.5
+offset_right = 287.5
+offset_bottom = 80.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_sy5u4")
+
+[node name="LoginPanel" type="VBoxContainer" parent="Main"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="EmailField" type="LineEdit" parent="Main/LoginPanel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_yxrsx")
+theme_override_font_sizes/font_size = 20
+placeholder_text = "Email"
+virtual_keyboard_type = 6
+
+[node name="PasswordField" type="LineEdit" parent="Main/LoginPanel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_yxrsx")
+theme_override_font_sizes/font_size = 20
+placeholder_text = "Password"
+virtual_keyboard_type = 6
+secret = true
+
+[node name="LoginButton" type="Button" parent="Main/LoginPanel"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_yxrsx")
+theme_override_font_sizes/font_size = 40
+text = "LOG IN"
+
+[node name="SignUpButton" type="Button" parent="Main/LoginPanel"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_yxrsx")
+theme_override_font_sizes/font_size = 40
+text = "SIGN UP"
+
+[node name="Feedback" type="VBoxContainer" parent="Main/LoginPanel"]
+layout_mode = 2
+
+[node name="StatusLabel" type="Label" parent="Main/LoginPanel/Feedback"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_yxrsx")
+theme_override_font_sizes/font_size = 40
+text = " NOT LOGGED IN"
+
+[node name="ErrorLabel" type="Label" parent="Main/LoginPanel/Feedback"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_yxrsx")
+theme_override_font_sizes/font_size = 20
+autowrap_mode = 3
+
+[node name="MainMenu" type="VBoxContainer" parent="Main"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 50
+
+[node name="Title" type="Label" parent="Main/MainMenu"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 5
+theme_override_fonts/font = ExtResource("1_yxrsx")
+theme_override_font_sizes/font_size = 50
+text = "RPS ARENA"
+
+[node name="Character" type="Button" parent="Main/MainMenu"]
+layout_mode = 2
+theme_override_constants/outline_size = 0
+theme_override_fonts/font = ExtResource("1_yxrsx")
+theme_override_font_sizes/font_size = 30
+text = "CHARACTER"
+
+[node name="Fight" type="Button" parent="Main/MainMenu"]
+layout_mode = 2
+theme_override_constants/outline_size = 0
+theme_override_fonts/font = ExtResource("1_yxrsx")
+theme_override_font_sizes/font_size = 30
+text = "FIGHT"
+
+[node name="History" type="Button" parent="Main/MainMenu"]
+layout_mode = 2
+theme_override_constants/outline_size = 0
+theme_override_fonts/font = ExtResource("1_yxrsx")
+theme_override_font_sizes/font_size = 30
+text = "HISTORY"
+
+[node name="Train" type="Button" parent="Main/MainMenu"]
+layout_mode = 2
+theme_override_constants/outline_size = 0
+theme_override_fonts/font = ExtResource("1_yxrsx")
+theme_override_font_sizes/font_size = 30
+text = "TRAIN"
+
+[node name="Settings" type="Button" parent="Main/MainMenu"]
+layout_mode = 2
+theme_override_constants/outline_size = 0
+theme_override_fonts/font = ExtResource("1_yxrsx")
+theme_override_font_sizes/font_size = 30
+text = "SETTINGS"
+
+[node name="Log out" type="Button" parent="Main/MainMenu"]
+layout_mode = 2
+theme_override_constants/outline_size = 0
+theme_override_fonts/font = ExtResource("1_yxrsx")
+theme_override_font_sizes/font_size = 30
+text = "QUIT"
+
+[connection signal="pressed" from="Main/LoginPanel/LoginButton" to="FirebaseManager" method="_on_login_button_pressed"]
+[connection signal="pressed" from="Main/LoginPanel/SignUpButton" to="FirebaseManager" method="_on_signup_button_pressed"]
+[connection signal="pressed" from="Main/MainMenu/Log out" to="FirebaseManager" method="_on_logout_button_pressed"]
