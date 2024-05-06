@@ -1,3 +1,5 @@
 # Godot 4+ specific ignores
 .godot/
 Addons/godot-firebase/.env
+Rps-mvp.csproj
+Rps-mvp.sln
