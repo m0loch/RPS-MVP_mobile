@@ -1,7 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://uw3ilvepofj"]
+[gd_scene load_steps=6 format=3 uid="uid://uw3ilvepofj"]
 
-[ext_resource type="Script" path="res://Scripts/main/FirebaseManager.gd" id="1_k0mp2"]
+[ext_resource type="Script" path="res://Scripts/FirebaseManager.gd" id="1_du40b"]
 [ext_resource type="FontFile" uid="uid://bxlvtv04rwuyf" path="res://Assets/Retro Gaming.ttf" id="1_yxrsx"]
+[ext_resource type="Script" path="res://Scripts/UI/MainViewController.cs" id="2_myfb0"]
+[ext_resource type="Script" path="res://Scripts/UI/UIContainer.cs" id="3_qd60e"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sy5u4"]
 content_margin_left = 20.0
@@ -32,9 +34,9 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="FirebaseManager" type="Node" parent="."]
-script = ExtResource("1_k0mp2")
+script = ExtResource("1_du40b")
 
-[node name="Main" type="PanelContainer" parent="."]
+[node name="MainView" type="PanelContainer" parent="." node_paths=PackedStringArray("manager")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -48,13 +50,16 @@ offset_bottom = 80.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_sy5u4")
+script = ExtResource("2_myfb0")
+manager = NodePath("../FirebaseManager")
 
-[node name="LoginPanel" type="VBoxContainer" parent="Main"]
-unique_name_in_owner = true
+[node name="LoginPanel" type="VBoxContainer" parent="MainView"]
+visible = false
 layout_mode = 2
 theme_override_constants/separation = 50
+script = ExtResource("3_qd60e")
 
-[node name="EmailField" type="LineEdit" parent="Main/LoginPanel"]
+[node name="EmailField" type="LineEdit" parent="MainView/LoginPanel"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
@@ -63,7 +68,7 @@ theme_override_font_sizes/font_size = 20
 placeholder_text = "Email"
 virtual_keyboard_type = 6
 
-[node name="PasswordField" type="LineEdit" parent="Main/LoginPanel"]
+[node name="PasswordField" type="LineEdit" parent="MainView/LoginPanel"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
@@ -73,43 +78,44 @@ placeholder_text = "Password"
 virtual_keyboard_type = 6
 secret = true
 
-[node name="LoginButton" type="Button" parent="Main/LoginPanel"]
+[node name="LoginButton" type="Button" parent="MainView/LoginPanel"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_yxrsx")
 theme_override_font_sizes/font_size = 40
 text = "LOG IN"
 
-[node name="SignUpButton" type="Button" parent="Main/LoginPanel"]
+[node name="SignUpButton" type="Button" parent="MainView/LoginPanel"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_yxrsx")
 theme_override_font_sizes/font_size = 40
 text = "SIGN UP"
 
-[node name="Feedback" type="VBoxContainer" parent="Main/LoginPanel"]
+[node name="Feedback" type="VBoxContainer" parent="MainView/LoginPanel"]
 layout_mode = 2
 
-[node name="StatusLabel" type="Label" parent="Main/LoginPanel/Feedback"]
+[node name="StatusLabel" type="Label" parent="MainView/LoginPanel/Feedback"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_yxrsx")
 theme_override_font_sizes/font_size = 40
 text = " NOT LOGGED IN"
 
-[node name="ErrorLabel" type="Label" parent="Main/LoginPanel/Feedback"]
+[node name="ErrorLabel" type="Label" parent="MainView/LoginPanel/Feedback"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_yxrsx")
 theme_override_font_sizes/font_size = 20
 autowrap_mode = 3
 
-[node name="MainMenu" type="VBoxContainer" parent="Main"]
-unique_name_in_owner = true
+[node name="MainMenu" type="VBoxContainer" parent="MainView"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/separation = 50
+script = ExtResource("3_qd60e")
+container = 1
 
-[node name="Title" type="Label" parent="Main/MainMenu"]
+[node name="Title" type="Label" parent="MainView/MainMenu"]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
@@ -118,48 +124,48 @@ theme_override_fonts/font = ExtResource("1_yxrsx")
 theme_override_font_sizes/font_size = 50
 text = "RPS ARENA"
 
-[node name="Character" type="Button" parent="Main/MainMenu"]
+[node name="Character" type="Button" parent="MainView/MainMenu"]
 layout_mode = 2
 theme_override_constants/outline_size = 0
 theme_override_fonts/font = ExtResource("1_yxrsx")
 theme_override_font_sizes/font_size = 30
 text = "CHARACTER"
 
-[node name="Fight" type="Button" parent="Main/MainMenu"]
+[node name="Fight" type="Button" parent="MainView/MainMenu"]
 layout_mode = 2
 theme_override_constants/outline_size = 0
 theme_override_fonts/font = ExtResource("1_yxrsx")
 theme_override_font_sizes/font_size = 30
 text = "FIGHT"
 
-[node name="History" type="Button" parent="Main/MainMenu"]
+[node name="History" type="Button" parent="MainView/MainMenu"]
 layout_mode = 2
 theme_override_constants/outline_size = 0
 theme_override_fonts/font = ExtResource("1_yxrsx")
 theme_override_font_sizes/font_size = 30
 text = "HISTORY"
 
-[node name="Train" type="Button" parent="Main/MainMenu"]
+[node name="Train" type="Button" parent="MainView/MainMenu"]
 layout_mode = 2
 theme_override_constants/outline_size = 0
 theme_override_fonts/font = ExtResource("1_yxrsx")
 theme_override_font_sizes/font_size = 30
 text = "TRAIN"
 
-[node name="Settings" type="Button" parent="Main/MainMenu"]
+[node name="Settings" type="Button" parent="MainView/MainMenu"]
 layout_mode = 2
 theme_override_constants/outline_size = 0
 theme_override_fonts/font = ExtResource("1_yxrsx")
 theme_override_font_sizes/font_size = 30
 text = "SETTINGS"
 
-[node name="Log out" type="Button" parent="Main/MainMenu"]
+[node name="Log out" type="Button" parent="MainView/MainMenu"]
 layout_mode = 2
 theme_override_constants/outline_size = 0
 theme_override_fonts/font = ExtResource("1_yxrsx")
 theme_override_font_sizes/font_size = 30
-text = "QUIT"
+text = "LOG OUT"
 
-[connection signal="pressed" from="Main/LoginPanel/LoginButton" to="FirebaseManager" method="_on_login_button_pressed"]
-[connection signal="pressed" from="Main/LoginPanel/SignUpButton" to="FirebaseManager" method="_on_signup_button_pressed"]
-[connection signal="pressed" from="Main/MainMenu/Log out" to="FirebaseManager" method="_on_logout_button_pressed"]
+[connection signal="pressed" from="MainView/LoginPanel/LoginButton" to="FirebaseManager" method="_on_login_button_pressed"]
+[connection signal="pressed" from="MainView/LoginPanel/SignUpButton" to="FirebaseManager" method="_on_signup_button_pressed"]
+[connection signal="pressed" from="MainView/MainMenu/Log out" to="FirebaseManager" method="_on_logout_button_pressed"]

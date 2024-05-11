@@ -1,5 +1,7 @@
 extends Node
 
+var player_id = null
+
 func _ready():
 	# Registers to authentication events
 	Firebase.Auth.login_succeeded.connect(on_login_succeeded)
@@ -10,14 +12,16 @@ func _ready():
 	
 	if Firebase.Auth.check_auth_file():
 		Firebase.Auth.load_auth()
-		
-	_update_view(Firebase.Auth.check_auth_file())
+		_update_status(true)
+	else:
+		_update_status(false)
 	pass
-	
-func _update_view(show_main):
-	%LoginPanel.visible = !show_main
-	%MainMenu.visible = show_main
-	print_debug(show_main)
+
+func _update_status(connected):
+	if connected:
+		player_id = Firebase.Auth.auth.localid
+	else:
+		player_id = null
 	pass
 
 func _on_login_button_pressed():
@@ -28,7 +32,6 @@ func _on_login_button_pressed():
 	pass
 
 func _on_signup_button_pressed():
-	print_debug("signup")
 	var email = %EmailField.text
 	var password = %PasswordField.text
 	Firebase.Auth.signup_with_email_and_password(email, password)
@@ -43,14 +46,14 @@ func on_login_succeeded(auth):
 	%StatusLabel.text = "LOGGED IN"
 	%ErrorLabel.text = ""
 	Firebase.Auth.save_auth(auth)
-	_update_view(true)
+	_update_status(true)
 	pass
 
 func on_signup_succeeded(auth):
 	%StatusLabel.text = "SIGN UP OK!"
 	%ErrorLabel.text = ""
 	Firebase.Auth.save_auth(auth)
-	_update_view(true)
+	_update_status(true)
 	pass
 
 func on_login_failed(error_code, message):
@@ -66,6 +69,5 @@ func on_signup_failed(error_code, message):
 func on_logout():
 	%StatusLabel.text = "NOT LOGGED IN"
 	%ErrorLabel.text = ""
-	_update_view(false)
-	print_debug(Firebase.Auth.check_auth_file())
+	_update_status(false)
 	pass
