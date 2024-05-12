@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://c0s2wkimx4yx4"]
+
+[ext_resource type="Script" path="res://Scripts/UI/SettingsScreen.cs" id="1_6q154"]
+[ext_resource type="Theme" uid="uid://y61pf7qtk7lm" path="res://Resources/basic_theme.tres" id="2_pbgo4"]
+
+[node name="SettingsScreen" type="VBoxContainer" node_paths=PackedStringArray("backBtn")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 50
+script = ExtResource("1_6q154")
+backBtn = NodePath("BackButton")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+theme = ExtResource("2_pbgo4")
+text = "SETTINGS - WiP"
+horizontal_alignment = 1
+
+[node name="BackButton" type="Button" parent="."]
+layout_mode = 2
+theme = ExtResource("2_pbgo4")
+text = "BACK
+"

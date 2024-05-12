@@ -1,9 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://uw3ilvepofj"]
+[gd_scene load_steps=12 format=3 uid="uid://uw3ilvepofj"]
 
-[ext_resource type="Script" path="res://Scripts/FirebaseManager.gd" id="1_du40b"]
-[ext_resource type="FontFile" uid="uid://bxlvtv04rwuyf" path="res://Assets/Retro Gaming.ttf" id="1_yxrsx"]
-[ext_resource type="Script" path="res://Scripts/UI/MainViewController.cs" id="2_myfb0"]
-[ext_resource type="Script" path="res://Scripts/UI/UIContainer.cs" id="3_qd60e"]
+[ext_resource type="Script" path="res://Scripts/FirebaseManager.gd" id="1_t567l"]
+[ext_resource type="Script" path="res://Scripts/UI/MainViewController.cs" id="2_uui0a"]
+[ext_resource type="Script" path="res://Scripts/UI/UIContainer.cs" id="3_r87le"]
+[ext_resource type="Theme" uid="uid://y61pf7qtk7lm" path="res://Resources/basic_theme.tres" id="4_spket"]
+[ext_resource type="Script" path="res://Scripts/UI/MainMenu.cs" id="5_7yr27"]
+[ext_resource type="PackedScene" uid="uid://cdg0wgnfipld3" path="res://Scenes/character_screen.tscn" id="6_ti0rs"]
+[ext_resource type="PackedScene" uid="uid://jl7336sn0y5" path="res://Scenes/fight_screen.tscn" id="7_84sto"]
+[ext_resource type="PackedScene" uid="uid://row7e3aotb7f" path="res://Scenes/history_screen.tscn" id="8_q2p3c"]
+[ext_resource type="PackedScene" uid="uid://c0s2wkimx4yx4" path="res://Scenes/settings_screen.tscn" id="9_tel1q"]
+[ext_resource type="PackedScene" uid="uid://y38roygy3dxd" path="res://Scenes/training_screen.tscn" id="10_jo5jt"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sy5u4"]
 content_margin_left = 20.0
@@ -34,7 +40,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="FirebaseManager" type="Node" parent="."]
-script = ExtResource("1_du40b")
+script = ExtResource("1_t567l")
 
 [node name="MainView" type="PanelContainer" parent="." node_paths=PackedStringArray("manager")]
 layout_mode = 1
@@ -50,21 +56,21 @@ offset_bottom = 80.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_sy5u4")
-script = ExtResource("2_myfb0")
+script = ExtResource("2_uui0a")
 manager = NodePath("../FirebaseManager")
 
 [node name="LoginPanel" type="VBoxContainer" parent="MainView"]
 visible = false
 layout_mode = 2
 theme_override_constants/separation = 50
-script = ExtResource("3_qd60e")
+script = ExtResource("3_r87le")
+container = 1
 
 [node name="EmailField" type="LineEdit" parent="MainView/LoginPanel"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_yxrsx")
-theme_override_font_sizes/font_size = 20
+theme = ExtResource("4_spket")
 placeholder_text = "Email"
 virtual_keyboard_type = 6
 
@@ -72,22 +78,19 @@ virtual_keyboard_type = 6
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_yxrsx")
-theme_override_font_sizes/font_size = 20
+theme = ExtResource("4_spket")
 placeholder_text = "Password"
 virtual_keyboard_type = 6
 secret = true
 
 [node name="LoginButton" type="Button" parent="MainView/LoginPanel"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_yxrsx")
-theme_override_font_sizes/font_size = 40
+theme = ExtResource("4_spket")
 text = "LOG IN"
 
 [node name="SignUpButton" type="Button" parent="MainView/LoginPanel"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_yxrsx")
-theme_override_font_sizes/font_size = 40
+theme = ExtResource("4_spket")
 text = "SIGN UP"
 
 [node name="Feedback" type="VBoxContainer" parent="MainView/LoginPanel"]
@@ -96,75 +99,97 @@ layout_mode = 2
 [node name="StatusLabel" type="Label" parent="MainView/LoginPanel/Feedback"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_yxrsx")
-theme_override_font_sizes/font_size = 40
+theme = ExtResource("4_spket")
 text = " NOT LOGGED IN"
 
 [node name="ErrorLabel" type="Label" parent="MainView/LoginPanel/Feedback"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_yxrsx")
-theme_override_font_sizes/font_size = 20
+theme = ExtResource("4_spket")
+theme_override_font_sizes/font_size = 24
 autowrap_mode = 3
 
-[node name="MainMenu" type="VBoxContainer" parent="MainView"]
+[node name="MainMenu" type="VBoxContainer" parent="MainView" node_paths=PackedStringArray("characterBtn", "fightBtn", "historyBtn", "trainingBtn", "settingsBtn")]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/separation = 50
-script = ExtResource("3_qd60e")
-container = 1
+script = ExtResource("5_7yr27")
+characterBtn = NodePath("Character")
+fightBtn = NodePath("Fight")
+historyBtn = NodePath("History")
+trainingBtn = NodePath("Train")
+settingsBtn = NodePath("Settings")
+container = 2
 
 [node name="Title" type="Label" parent="MainView/MainMenu"]
 layout_mode = 2
 size_flags_horizontal = 4
+theme = ExtResource("4_spket")
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_outline_size = 5
-theme_override_fonts/font = ExtResource("1_yxrsx")
-theme_override_font_sizes/font_size = 50
 text = "RPS ARENA"
 
 [node name="Character" type="Button" parent="MainView/MainMenu"]
 layout_mode = 2
+theme = ExtResource("4_spket")
 theme_override_constants/outline_size = 0
-theme_override_fonts/font = ExtResource("1_yxrsx")
-theme_override_font_sizes/font_size = 30
 text = "CHARACTER"
 
 [node name="Fight" type="Button" parent="MainView/MainMenu"]
 layout_mode = 2
+theme = ExtResource("4_spket")
 theme_override_constants/outline_size = 0
-theme_override_fonts/font = ExtResource("1_yxrsx")
-theme_override_font_sizes/font_size = 30
 text = "FIGHT"
 
 [node name="History" type="Button" parent="MainView/MainMenu"]
 layout_mode = 2
+theme = ExtResource("4_spket")
 theme_override_constants/outline_size = 0
-theme_override_fonts/font = ExtResource("1_yxrsx")
-theme_override_font_sizes/font_size = 30
 text = "HISTORY"
 
 [node name="Train" type="Button" parent="MainView/MainMenu"]
 layout_mode = 2
+theme = ExtResource("4_spket")
 theme_override_constants/outline_size = 0
-theme_override_fonts/font = ExtResource("1_yxrsx")
-theme_override_font_sizes/font_size = 30
 text = "TRAIN"
 
 [node name="Settings" type="Button" parent="MainView/MainMenu"]
 layout_mode = 2
+theme = ExtResource("4_spket")
 theme_override_constants/outline_size = 0
-theme_override_fonts/font = ExtResource("1_yxrsx")
-theme_override_font_sizes/font_size = 30
 text = "SETTINGS"
 
 [node name="Log out" type="Button" parent="MainView/MainMenu"]
 layout_mode = 2
+theme = ExtResource("4_spket")
 theme_override_constants/outline_size = 0
-theme_override_fonts/font = ExtResource("1_yxrsx")
-theme_override_font_sizes/font_size = 30
 text = "LOG OUT"
+
+[node name="CharacterScreen" parent="MainView" instance=ExtResource("6_ti0rs")]
+visible = false
+layout_mode = 2
+
+[node name="FightScreen" parent="MainView" instance=ExtResource("7_84sto")]
+visible = false
+layout_mode = 2
+container = 4
+
+[node name="HistoryScreen" parent="MainView" instance=ExtResource("8_q2p3c")]
+visible = false
+layout_mode = 2
+container = 5
+
+[node name="TrainingScreen" parent="MainView" instance=ExtResource("10_jo5jt")]
+visible = false
+layout_mode = 2
+container = 6
+
+[node name="SettingsScreen" parent="MainView" instance=ExtResource("9_tel1q")]
+visible = false
+layout_mode = 2
+container = 7
 
 [connection signal="pressed" from="MainView/LoginPanel/LoginButton" to="FirebaseManager" method="_on_login_button_pressed"]
 [connection signal="pressed" from="MainView/LoginPanel/SignUpButton" to="FirebaseManager" method="_on_signup_button_pressed"]
