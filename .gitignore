@@ -3,3 +3,4 @@
 Addons/godot-firebase/.env
 Rps-mvp.csproj
 Rps-mvp.sln
+Scripts/Secrets/*.cfg.cs
