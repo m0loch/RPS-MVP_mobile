@@ -1,6 +1,5 @@
 using Godot;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 
 public partial class CharacterScreen : UIContainer
@@ -10,6 +9,8 @@ public partial class CharacterScreen : UIContainer
     [Export] private Button saveBtn;
 
     private string userId;
+    private string currentUserName;
+    private int currentClan;
 
     public override void _Ready()
     {
@@ -22,13 +23,9 @@ public partial class CharacterScreen : UIContainer
     public override void OnProfileLoaded(string userId)
     {
         this.userId = userId;
-        HttpRequest httpRequest = GetNode<HttpRequest>("HTTPRequest");
+        HttpRequest httpRequest = GetNode<HttpRequest>("HTTPRequest_Profile");
 
         string url = $"{APICfg.profile}/?id={userId}";
-        Debug.Print(url);
-
-        // Load character data from Firestore
-        httpRequest.RequestCompleted += OnLoadCompleted;
         httpRequest.Request(url);
     }
 
@@ -36,7 +33,7 @@ public partial class CharacterScreen : UIContainer
     {
         if (responseCode != 200)
         {
-            // TODO: rise error
+            MainViewController.RaiseFirebaseError("ERROR: couldn't load user profile");
             return;
         }
 
@@ -49,35 +46,56 @@ public partial class CharacterScreen : UIContainer
             return;
         }
 
-        foreach(var key in response.Keys)
-        {
-            Debug.Print(key.ToString());
-            Debug.Print(response[key].ToString());
-        }
         var data = response["data"].AsGodotDictionary();
-        nameField.Text = data["userName"].ToString();
-        clanSelector.Selected = (int)data["clan"];
-        saveBtn.Disabled = false;
+        nameField.Text = currentUserName = data["userName"].ToString();
+        clanSelector.Selected = currentClan = (int)data["clan"];
     }
 
     private void OnSaveBtnPressed()
     {
-        HttpRequest httpRequest = GetNode<HttpRequest>("HTTPRequest");
+        saveBtn.Disabled = true;
 
-        string url = $"{APICfg.validateProfile}";
-        Debug.Print(url);
+        if (IsUserNameChanged())
+        {
+            // Validate UserName
+            HttpRequest httpRequest = GetNode<HttpRequest>("HTTPRequest_UserNameValidation");
 
-        // Load character data from Firestore
-        httpRequest.RequestCompleted += OnValidationCompleted;
-        httpRequest.Request(url);
+            string url = $"{APICfg.validateProfile}/?userName={nameField.Text}";
+
+            // Load character data from Firestore
+            httpRequest.Request(url);
+        }
+
+        PerformSave();
     }
 
-    private void OnValidationCompleted(long result, long responseCode, string[] headers, byte[] body)
+    private void OnUserNameValidationCompleted(long result, long responseCode, string[] headers, byte[] body)
     {
-        // LETTURA DEL RISULTATO PRIMA DI FARE COSE
-        return;
+        if (responseCode != 200)
+        {
+            MainViewController.RaiseFirebaseError("ERROR: Could not validate userName");
+            return;
+        }
 
-        HttpRequest httpRequest = GetNode<HttpRequest>("HTTPRequest");
+        // Read call result
+        var json = new Json();
+        json.Parse(body.GetStringFromUtf8());
+        
+        var response = json.Data.AsGodotDictionary();
+
+        if ((int)response["result"] == 0) {
+            MainViewController.RaiseFirebaseError("ERROR: UserName is already in use");
+            saveBtn.Disabled = false;
+            return;
+        }
+
+        // No blocker: go ahead with the save process
+        PerformSave();
+    }
+
+    private void PerformSave()
+    {
+        HttpRequest httpRequest = GetNode<HttpRequest>("HTTPRequest_Save");
 
         string url = $"{APICfg.profile}/?id={userId}";
         
@@ -90,7 +108,6 @@ public partial class CharacterScreen : UIContainer
         string[] hdrs = new string[] { "Content-Type: application/json" };
 
         // Save character on Firestore
-        httpRequest.RequestCompleted += OnSaveCompleted;
         httpRequest.Request(url, hdrs, HttpClient.Method.Post, payload);
     }
 
@@ -100,13 +117,13 @@ public partial class CharacterScreen : UIContainer
 
         if (responseCode != 200)
         {
-            // TODO: rise error
-            Debug.Print("Could not save...");
-            return;
+            MainViewController.RaiseFirebaseError("ERROR: Could not save profile");
+            saveBtn.Disabled = false;
         }
 
-        // Save was ok, we can leave
-        stateMachine.SwitchState(ContainerType.MainMenu);
+        // Update values
+        currentUserName = nameField.Text;
+        currentClan = clanSelector.Selected;
     }
 
     public override void OnCancel()
@@ -115,4 +132,35 @@ public partial class CharacterScreen : UIContainer
         stateMachine.SwitchState(ContainerType.MainMenu);
     }
 
+#region UI Management
+    private bool IsClanChanged()
+    {
+        return clanSelector.Selected != currentClan;
+    }
+
+    private bool IsUserNameChanged()
+    {
+        return nameField.Text != currentUserName;
+    }
+
+    private bool IsDataChanged()
+    {
+        return IsClanChanged() || IsUserNameChanged(); 
+    }
+
+    public void UpdateSaveBtnState()
+    {
+        saveBtn.Disabled = !IsDataChanged();
+    }
+
+    public void OnClanEdited(int clan)
+    {
+        UpdateSaveBtnState();
+    }
+
+    public void OnUserNameEdited(string userName)
+    {
+        UpdateSaveBtnState();
+    }
+#endregion
 }

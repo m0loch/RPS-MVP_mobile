@@ -17,6 +17,7 @@ public partial class MainViewController : PanelContainer
     public static event Action OnBackButtonPressed;
 
     public static void RaiseBackButtonPressed() => OnBackButtonPressed?.Invoke();
+    public static void RaiseFirebaseError(string error) => Debug.Print(error);
 
     public override void _Ready()
     {

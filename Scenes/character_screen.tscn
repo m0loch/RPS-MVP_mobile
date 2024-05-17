@@ -19,7 +19,13 @@ clanSelector = NodePath("ClanSelector")
 saveBtn = NodePath("SaveButton")
 container = 3
 
-[node name="HTTPRequest" type="HTTPRequest" parent="."]
+[node name="HTTPRequest_Profile" type="HTTPRequest" parent="."]
+use_threads = true
+
+[node name="HTTPRequest_UserNameValidation" type="HTTPRequest" parent="."]
+use_threads = true
+
+[node name="HTTPRequest_Save" type="HTTPRequest" parent="."]
 use_threads = true
 
 [node name="NameField" type="LineEdit" parent="."]
@@ -46,3 +52,9 @@ popup/item_2/id = 2
 layout_mode = 2
 theme = ExtResource("2_p8jvd")
 text = "SAVE"
+
+[connection signal="request_completed" from="HTTPRequest_Profile" to="." method="OnLoadCompleted"]
+[connection signal="request_completed" from="HTTPRequest_UserNameValidation" to="." method="OnUserNameValidationCompleted"]
+[connection signal="request_completed" from="HTTPRequest_Save" to="." method="OnSaveCompleted"]
+[connection signal="text_changed" from="NameField" to="." method="OnUserNameEdited"]
+[connection signal="item_selected" from="ClanSelector" to="." method="OnClanEdited"]
