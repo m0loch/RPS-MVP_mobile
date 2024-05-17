@@ -8,6 +8,8 @@ public partial class UIContainer : Container
 
     protected MainViewController stateMachine;
 
+    public virtual void OnProfileLoaded(string userId) { }
+
     public override void _Ready()
     {
         base._Ready();

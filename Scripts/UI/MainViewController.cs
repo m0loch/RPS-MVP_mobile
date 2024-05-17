@@ -21,12 +21,6 @@ public partial class MainViewController : PanelContainer
             .Where(element => element is UIContainer)
             .Cast<UIContainer>()
             .ToDictionary(element => element.container);
-
-        userId = manager.Get("player_id").ToString();
-
-        Debug.Print(userId);
-
-        SwitchState(userId.Length == 0 ? ContainerType.Login : ContainerType.MainMenu);
     }
 
     public override void _Process(double delta)
@@ -39,8 +33,15 @@ public partial class MainViewController : PanelContainer
         {
             SwitchState(ContainerType.Login);
         }
-        else if (currentState == ContainerType.Login)
+        else if (currentState == ContainerType.None || currentState == ContainerType.Login)
         {
+            Debug.Print("connecting");
+
+            // Connection has just been performed
+            foreach (var container in containers.Values) {
+                container.OnProfileLoaded(userId);
+            }
+
             SwitchState(ContainerType.MainMenu);
         }
     }
