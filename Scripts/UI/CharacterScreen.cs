@@ -15,6 +15,7 @@ public partial class CharacterScreen : UIContainer
     {
         base._Ready();
 
+        saveBtn.Disabled = true;
         saveBtn.Pressed += OnSaveBtnPressed;
     }
 
@@ -27,11 +28,11 @@ public partial class CharacterScreen : UIContainer
         Debug.Print(url);
 
         // Load character data from Firestore
-        httpRequest.RequestCompleted += OnRequestCompleted;
+        httpRequest.RequestCompleted += OnLoadCompleted;
         httpRequest.Request(url);
     }
 
-    private void OnRequestCompleted(long result, long responseCode, string[] headers, byte[] body)
+    private void OnLoadCompleted(long result, long responseCode, string[] headers, byte[] body)
     {
         if (responseCode != 200)
         {
@@ -56,6 +57,7 @@ public partial class CharacterScreen : UIContainer
         var data = response["data"].AsGodotDictionary();
         nameField.Text = data["userName"].ToString();
         clanSelector.Selected = (int)data["clan"];
+        saveBtn.Disabled = false;
     }
 
     private void OnSaveBtnPressed()
@@ -106,4 +108,11 @@ public partial class CharacterScreen : UIContainer
         // Save was ok, we can leave
         stateMachine.SwitchState(ContainerType.MainMenu);
     }
+
+    public override void OnCancel()
+    {
+        // TODO: warn user he's not saving
+        stateMachine.SwitchState(ContainerType.MainMenu);
+    }
+
 }

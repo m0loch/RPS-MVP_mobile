@@ -13,6 +13,11 @@ public partial class MainViewController : PanelContainer
     [Export] private Node manager;
     private ContainerType currentState = ContainerType.None;
 
+    public static event Action<ContainerType> OnStateChanged;
+    public static event Action OnBackButtonPressed;
+
+    public static void RaiseBackButtonPressed() => OnBackButtonPressed?.Invoke();
+
     public override void _Ready()
     {
         base._Ready();
@@ -21,6 +26,8 @@ public partial class MainViewController : PanelContainer
             .Where(element => element is UIContainer)
             .Cast<UIContainer>()
             .ToDictionary(element => element.container);
+
+        OnBackButtonPressed += NotifyBackButtonPressed;
     }
 
     public override void _Process(double delta)
@@ -56,5 +63,12 @@ public partial class MainViewController : PanelContainer
         if (containers.ContainsKey(currentState)) { containers[currentState].Notification(StateConstants.DISABLED); }
         currentState = newState;
         if (containers.ContainsKey(currentState)) { containers[currentState].Notification(StateConstants.ENABLED); }
+
+        OnStateChanged?.Invoke(newState);
+    }
+
+    private void NotifyBackButtonPressed()
+    {
+        containers[currentState].OnCancel();
     }
 }

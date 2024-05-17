@@ -9,6 +9,10 @@ public partial class UIContainer : Container
     protected MainViewController stateMachine;
 
     public virtual void OnProfileLoaded(string userId) { }
+    public virtual void OnCancel()
+    {
+        stateMachine.SwitchState(ContainerType.MainMenu);
+    }
 
     public override void _Ready()
     {

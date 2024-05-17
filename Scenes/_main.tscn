@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://uw3ilvepofj"]
+[gd_scene load_steps=14 format=3 uid="uid://uw3ilvepofj"]
 
 [ext_resource type="Script" path="res://Scripts/FirebaseManager.gd" id="1_t567l"]
 [ext_resource type="Script" path="res://Scripts/UI/MainViewController.cs" id="2_uui0a"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://row7e3aotb7f" path="res://Scenes/history_screen.tscn" id="8_q2p3c"]
 [ext_resource type="PackedScene" uid="uid://c0s2wkimx4yx4" path="res://Scenes/settings_screen.tscn" id="9_tel1q"]
 [ext_resource type="PackedScene" uid="uid://y38roygy3dxd" path="res://Scenes/training_screen.tscn" id="10_jo5jt"]
+[ext_resource type="Script" path="res://Scripts/UI/BackButton.cs" id="11_ctxk7"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sy5u4"]
 content_margin_left = 20.0
@@ -30,6 +31,8 @@ shadow_color = Color(0, 0, 0, 1)
 shadow_size = 4
 shadow_offset = Vector2(2, 2)
 anti_aliasing = false
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_plotl"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -110,9 +113,7 @@ theme_override_font_sizes/font_size = 24
 autowrap_mode = 3
 
 [node name="MainMenu" type="VBoxContainer" parent="MainView" node_paths=PackedStringArray("characterBtn", "fightBtn", "historyBtn", "trainingBtn", "settingsBtn")]
-visible = false
 layout_mode = 2
-size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/separation = 50
 script = ExtResource("5_7yr27")
@@ -191,6 +192,24 @@ visible = false
 layout_mode = 2
 container = 7
 
+[node name="BackButton" type="Button" parent="."]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 1
+offset_left = 20.0
+offset_top = 21.0
+offset_right = 80.0
+offset_bottom = 81.0
+theme = ExtResource("4_spket")
+theme_override_colors/font_pressed_color = Color(0.173747, 0.345716, 0.331612, 1)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_plotl")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_plotl")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_plotl")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_plotl")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_plotl")
+text = "<"
+script = ExtResource("11_ctxk7")
+
 [connection signal="pressed" from="MainView/LoginPanel/LoginButton" to="FirebaseManager" method="_on_login_button_pressed"]
 [connection signal="pressed" from="MainView/LoginPanel/SignUpButton" to="FirebaseManager" method="_on_signup_button_pressed"]
 [connection signal="pressed" from="MainView/MainMenu/Log out" to="FirebaseManager" method="_on_logout_button_pressed"]
+[connection signal="pressed" from="BackButton" to="BackButton" method="OnPressed"]
