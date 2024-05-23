@@ -113,6 +113,7 @@ theme_override_font_sizes/font_size = 24
 autowrap_mode = 3
 
 [node name="MainMenu" type="VBoxContainer" parent="MainView" node_paths=PackedStringArray("characterBtn", "fightBtn", "historyBtn", "trainingBtn", "settingsBtn")]
+visible = false
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_constants/separation = 50
