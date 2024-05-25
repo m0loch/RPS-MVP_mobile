@@ -56,12 +56,12 @@ func on_signup_succeeded(auth):
 	_update_status(true)
 	pass
 
-func on_login_failed(error_code, message):
+func on_login_failed(_error_code, message):
 	%StatusLabel.text = "LOGIN FAILED"
 	%ErrorLabel.text = message
 	pass
 
-func on_signup_failed(error_code, message):
+func on_signup_failed(_error_code, message):
 	%StatusLabel.text = "SIGN UP FAILED"
 	%ErrorLabel.text = message
 	pass
