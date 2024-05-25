@@ -1,9 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://jl7336sn0y5"]
+[gd_scene load_steps=4 format=3 uid="uid://jl7336sn0y5"]
 
 [ext_resource type="Script" path="res://Scripts/UI/FightScreen.cs" id="1_vokqx"]
 [ext_resource type="Theme" uid="uid://y61pf7qtk7lm" path="res://Resources/basic_theme.tres" id="2_b8rlh"]
+[ext_resource type="Script" path="res://Scripts/UI/ToggleButton.cs" id="3_b8v10"]
 
-[node name="FightScreen" type="VBoxContainer" node_paths=PackedStringArray("backBtn")]
+[node name="FightScreen" type="VBoxContainer" node_paths=PackedStringArray("nextTournamentLbl", "participateBtn", "backBtn")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -11,16 +12,41 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 50
 script = ExtResource("1_vokqx")
+nextTournamentLbl = NodePath("NextTournamentLabel")
+participateBtn = NodePath("ParticipateButton")
 backBtn = NodePath("BackButton")
+
+[node name="HTTPRequest_NextTournament" type="HTTPRequest" parent="."]
+use_threads = true
+
+[node name="HTTPRequest_Registration" type="HTTPRequest" parent="."]
+use_threads = true
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 2
 theme = ExtResource("2_b8rlh")
-text = "FIGHT - WiP"
+text = "FIGHT!"
 horizontal_alignment = 1
+
+[node name="NextTournamentLabel" type="Label" parent="."]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme = ExtResource("2_b8rlh")
+text = "No data on future tournaments yet"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="ParticipateButton" type="Button" parent="."]
+layout_mode = 2
+theme = ExtResource("2_b8rlh")
+text = "SIGN UP"
+script = ExtResource("3_b8v10")
 
 [node name="BackButton" type="Button" parent="."]
 layout_mode = 2
 theme = ExtResource("2_b8rlh")
 text = "BACK
 "
+
+[connection signal="request_completed" from="HTTPRequest_NextTournament" to="." method="OnNextTournamentLoaded"]
+[connection signal="request_completed" from="HTTPRequest_Registration" to="." method="OnRegistrationLoaded"]
