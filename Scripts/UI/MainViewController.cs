@@ -32,7 +32,6 @@ public partial class MainViewController : PanelContainer
             .ToDictionary(element => element.container);
 
         baseHeight = parent.GetRect().Size.Y;
-        Debug.Print(baseHeight.ToString());
 
         OnBackButtonPressed += NotifyBackButtonPressed;
     }
@@ -49,8 +48,6 @@ public partial class MainViewController : PanelContainer
         }
         else if (currentState == ContainerType.None || currentState == ContainerType.Login)
         {
-            Debug.Print("connecting");
-
             // Connection has just been performed
             foreach (var container in containers.Values) {
                 container.OnProfileLoaded(userId);
@@ -59,12 +56,14 @@ public partial class MainViewController : PanelContainer
             SwitchState(ContainerType.MainMenu);
         }
 
-        int keyboardHeight = DisplayServer.VirtualKeyboardGetHeight(); // > 0 equals keyboard shown
-        AccomodateKeyboard(keyboardHeight);
+        AccomodateKeyboard();
     }
 
-    private void AccomodateKeyboard(int keyboardHeight)
+    private void AccomodateKeyboard()
     {
+        if (!DisplayServer.HasFeature(DisplayServer.Feature.VirtualKeyboard)) return;
+
+        int keyboardHeight = DisplayServer.VirtualKeyboardGetHeight(); // > 0 equals keyboard shown
         parent.SetSize(new Vector2(parent.GetRect().Size.X, baseHeight - keyboardHeight), true);
     }
 
