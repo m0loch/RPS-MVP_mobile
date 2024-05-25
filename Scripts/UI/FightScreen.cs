@@ -10,6 +10,9 @@ public partial class FightScreen : UIContainer
 
     [Export] private Button backBtn;
 
+    [Export] private string SignUpText;
+    [Export] private string WithdrawText;
+
     private string userId;
     private bool isParticipating = false;
     private DateTime? nextDate = null;
@@ -68,7 +71,7 @@ public partial class FightScreen : UIContainer
         Debug.Print($"Registration: responseCode is {responseCode}");
         if (responseCode != 200)
         {
-            MainViewController.RaiseFirebaseError("ERROR: couldn't load next tournament data");
+            MainViewController.RaiseFirebaseError("ERROR: error handling registration data");
             return;
         }
 
@@ -76,13 +79,28 @@ public partial class FightScreen : UIContainer
         json.Parse(body.GetStringFromUtf8());
         
         var response = json.Data.AsGodotDictionary();
-        participateBtn.SetPressed((int)response["result"] != 0);
+
+        isParticipating = (int)response["result"] != 0;
+        participateBtn.SetPressed(isParticipating);
+        participateBtn.Text = isParticipating ? WithdrawText : SignUpText;
     }
 
     private void OnParticipateBtnPressed()
     {
-        isParticipating = !isParticipating;
-        participateBtn.SetPressed(isParticipating);
+        HttpRequest httpRequest = GetNode<HttpRequest>("HTTPRequest_Registration");
+        var obj = new Godot.Collections.Dictionary();
+        obj["id"] = userId;
+
+        string payload = Json.Stringify(obj);
+        string[] hdrs = new string[] { "Content-Type: application/json" };
+
+        // If the user is participating, delete the registration, otherwise post a new one
+        httpRequest.Request(
+            $"{APICfg.registration}",
+            hdrs,
+            isParticipating ? HttpClient.Method.Delete : HttpClient.Method.Post,
+            payload
+        );
     }
 
     private void OnBackBtnPressed()
