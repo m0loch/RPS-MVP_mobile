@@ -3,13 +3,16 @@ using System;
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
+using System.ComponentModel;
 
 public partial class MainViewController : PanelContainer
 {
     private Dictionary<ContainerType, UIContainer> containers;
 
     private string userId = "";
+    private float baseHeight = 0;
 
+    [Export] private Control parent;
     [Export] private Node manager;
     private ContainerType currentState = ContainerType.None;
 
@@ -27,6 +30,9 @@ public partial class MainViewController : PanelContainer
             .Where(element => element is UIContainer)
             .Cast<UIContainer>()
             .ToDictionary(element => element.container);
+
+        baseHeight = parent.GetRect().Size.Y;
+        Debug.Print(baseHeight.ToString());
 
         OnBackButtonPressed += NotifyBackButtonPressed;
     }
@@ -52,6 +58,14 @@ public partial class MainViewController : PanelContainer
 
             SwitchState(ContainerType.MainMenu);
         }
+
+        int keyboardHeight = DisplayServer.VirtualKeyboardGetHeight(); // > 0 equals keyboard shown
+        AccomodateKeyboard(keyboardHeight);
+    }
+
+    private void AccomodateKeyboard(int keyboardHeight)
+    {
+        parent.SetSize(new Vector2(parent.GetRect().Size.X, baseHeight - keyboardHeight), true);
     }
 
     public void SwitchState(ContainerType newState)
