@@ -150,7 +150,7 @@ public partial class CharacterScreen : UIContainer
 
     public void UpdateSaveBtnState()
     {
-        saveBtn.Disabled = !IsDataChanged();
+        saveBtn.Disabled = (nameField.Text.Length == 0) || !IsDataChanged();
     }
 
     public void OnClanEdited(int clan)
