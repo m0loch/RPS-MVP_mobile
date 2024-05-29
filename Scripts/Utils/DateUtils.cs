@@ -3,15 +3,22 @@ using System.Globalization;
 
 public partial class Utils
 {
-    public static string GetDateLabel(DateTime? dateTime)
+    public static string GetDateTimeLabel(DateTime? dateTime)
     {
         if (dateTime == null) return "<unknown>";
-        return GetDateLabel(dateTime.Value);
+        return GetDateTimeLabel(dateTime.Value);
     }
-    public static string GetDateLabel(DateTime dateTime)
+
+    public static string GetDateTimeLabel(DateTime dateTime)
     {
         return dateTime.ToLocalTime().ToString(CultureInfo.CurrentCulture);
     }
+
+    public static string GetDateLabel(DateTime dateTime)
+    {
+        return dateTime.ToLocalTime().ToShortDateString();
+    }
+
     public static DateTime UnixTimeStampToDateTime(double unixTimeStamp)
     {
         // Unix timestamp is seconds past epoch

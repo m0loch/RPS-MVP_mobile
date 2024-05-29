@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scripts/UI/HistoryScreen.cs" id="1_l3qys"]
 [ext_resource type="Theme" uid="uid://y61pf7qtk7lm" path="res://Resources/basic_theme.tres" id="2_s3nf4"]
 
-[node name="HistoryScreen" type="VBoxContainer" node_paths=PackedStringArray("backBtn")]
+[node name="HistoryScreen" type="VBoxContainer" node_paths=PackedStringArray("backBtn", "noHistoryLabel", "tournamentPrefab")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -12,15 +12,37 @@ grow_vertical = 2
 theme_override_constants/separation = 50
 script = ExtResource("1_l3qys")
 backBtn = NodePath("BackButton")
+noHistoryLabel = NodePath("NoHistoryLabel")
+tournamentPrefab = NodePath("TournamentBtn")
+
+[node name="HTTPRequest_Tournaments" type="HTTPRequest" parent="."]
+use_threads = true
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 2
 theme = ExtResource("2_s3nf4")
-text = "HISTORY - WiP"
+text = "PAST TOURNAMENTS"
 horizontal_alignment = 1
+
+[node name="NoHistoryLabel" type="Label" parent="."]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme = ExtResource("2_s3nf4")
+text = "NO PAST RESULTS AVAILABLE"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="TournamentBtn" type="Button" parent="."]
+visible = false
+layout_mode = 2
+theme = ExtResource("2_s3nf4")
+text = "placeholder
+"
 
 [node name="BackButton" type="Button" parent="."]
 layout_mode = 2
 theme = ExtResource("2_s3nf4")
 text = "BACK
 "
+
+[connection signal="request_completed" from="HTTPRequest_Tournaments" to="." method="OnLoadCompleted"]

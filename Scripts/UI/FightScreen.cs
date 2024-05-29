@@ -61,7 +61,7 @@ public partial class FightScreen : UIContainer
         }
 
         nextDate = Utils.UnixTimeStampToDateTime((double)response["date"]);
-        nextTournamentLbl.Text = $"Next tournament at {Utils.GetDateLabel(nextDate)}";
+        nextTournamentLbl.Text = $"Next tournament at {Utils.GetDateTimeLabel(nextDate)}";
 
         participateBtn.Visible = true;
     }
