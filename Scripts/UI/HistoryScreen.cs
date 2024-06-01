@@ -10,7 +10,7 @@ public partial class HistoryScreen : UIContainer
     [Export] private Button tournamentPrefab;
 
     private string userId;
-    private Dictionary<string, Godot.Collections.Dictionary> tournaments = new();
+    private Dictionary<string, Godot.Collections.Array> tournaments = new();
 
     public override void _Ready()
     {
@@ -59,7 +59,7 @@ public partial class HistoryScreen : UIContainer
                 )
             );
 
-            tournaments[buttonLabel] = tourData["outcome"].AsGodotDictionary();
+            tournaments[buttonLabel] = tourData["outcome"].AsGodotArray();
 
             var newCtrl = tournamentPrefab.Duplicate() as Button;
             newCtrl.Visible = true;
@@ -69,8 +69,6 @@ public partial class HistoryScreen : UIContainer
 
             // Back button should always be the last control
             MoveChild(newCtrl, newCtrl.GetIndex() - 1);
-
-            tournaments.Add(buttonLabel, tourData["outcome"].AsGodotDictionary());
         }
     }
 
@@ -79,8 +77,10 @@ public partial class HistoryScreen : UIContainer
         stateMachine.SwitchState(ContainerType.MainMenu);
     }
 
-    private static void OnTournamentBtnPressed(Button sender)
+    private void OnTournamentBtnPressed(Button sender)
     {
-        Debug.Print($"Placeholder: call either a popup or a new scene altogether for tournament {sender.Text}");
+        MainViewController.RaiseTournamentSelected(sender.Text, tournaments[sender.Text]);
+
+        stateMachine.SwitchState(ContainerType.TournamentReportScreen);
     }
 }

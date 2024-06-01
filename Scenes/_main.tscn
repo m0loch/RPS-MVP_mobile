@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://uw3ilvepofj"]
+[gd_scene load_steps=15 format=3 uid="uid://uw3ilvepofj"]
 
 [ext_resource type="Script" path="res://Scripts/FirebaseManager.gd" id="1_t567l"]
 [ext_resource type="Script" path="res://Scripts/UI/MainViewController.cs" id="2_uui0a"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://cdg0wgnfipld3" path="res://Scenes/character_screen.tscn" id="6_ti0rs"]
 [ext_resource type="PackedScene" uid="uid://jl7336sn0y5" path="res://Scenes/fight_screen.tscn" id="7_84sto"]
 [ext_resource type="PackedScene" uid="uid://row7e3aotb7f" path="res://Scenes/history_screen.tscn" id="8_q2p3c"]
+[ext_resource type="PackedScene" uid="uid://bo1xnuf18n0wh" path="res://Scenes/tournament_report_screen.tscn" id="9_4mixg"]
 [ext_resource type="PackedScene" uid="uid://c0s2wkimx4yx4" path="res://Scenes/settings_screen.tscn" id="9_tel1q"]
 [ext_resource type="PackedScene" uid="uid://y38roygy3dxd" path="res://Scenes/training_screen.tscn" id="10_jo5jt"]
 [ext_resource type="Script" path="res://Scripts/UI/BackButton.cs" id="11_ctxk7"]
@@ -177,22 +178,22 @@ layout_mode = 2
 [node name="FightScreen" parent="MainView" instance=ExtResource("7_84sto")]
 visible = false
 layout_mode = 2
-container = 4
 
 [node name="HistoryScreen" parent="MainView" instance=ExtResource("8_q2p3c")]
 visible = false
 layout_mode = 2
-container = 5
+
+[node name="TournamentReportScreen" parent="MainView" instance=ExtResource("9_4mixg")]
+visible = false
+layout_mode = 2
 
 [node name="TrainingScreen" parent="MainView" instance=ExtResource("10_jo5jt")]
 visible = false
 layout_mode = 2
-container = 6
 
 [node name="SettingsScreen" parent="MainView" instance=ExtResource("9_tel1q")]
 visible = false
 layout_mode = 2
-container = 7
 
 [node name="BackButton" type="Button" parent="."]
 custom_minimum_size = Vector2(60, 60)

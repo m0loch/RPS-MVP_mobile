@@ -1,0 +1,36 @@
+[gd_scene load_steps=3 format=3 uid="uid://bo1xnuf18n0wh"]
+
+[ext_resource type="Script" path="res://Scripts/UI/TournamentReportScreen.cs" id="1_l7c4h"]
+[ext_resource type="Theme" uid="uid://y61pf7qtk7lm" path="res://Resources/basic_theme.tres" id="2_mx5bo"]
+
+[node name="TournamentReportScreen" type="VBoxContainer" node_paths=PackedStringArray("textLabel", "backBtn")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 50
+script = ExtResource("1_l7c4h")
+textLabel = NodePath("TextLabel")
+backBtn = NodePath("BackButton")
+container = 6
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 2
+theme = ExtResource("2_mx5bo")
+text = "TOURNAMENT"
+horizontal_alignment = 1
+
+[node name="TextLabel" type="Label" parent="."]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme = ExtResource("2_mx5bo")
+text = "Loading data..."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="BackButton" type="Button" parent="."]
+layout_mode = 2
+theme = ExtResource("2_mx5bo")
+text = "BACK
+"

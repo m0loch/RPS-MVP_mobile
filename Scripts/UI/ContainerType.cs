@@ -6,6 +6,7 @@ public enum ContainerType
     CharacterScreen,
     FightScreen,
     HistoryScreen,
+    TournamentReportScreen,
     TrainingScreen,
     SettingsMenu,
 }

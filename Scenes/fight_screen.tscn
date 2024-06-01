@@ -17,6 +17,7 @@ participateBtn = NodePath("ParticipateButton")
 backBtn = NodePath("BackButton")
 SignUpText = "SIGN UP"
 WithdrawText = "WITHDRAW"
+container = 4
 
 [node name="HTTPRequest_NextTournament" type="HTTPRequest" parent="."]
 use_threads = true

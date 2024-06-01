@@ -17,9 +17,14 @@ public partial class MainViewController : PanelContainer
     private ContainerType currentState = ContainerType.None;
 
     public static event Action<ContainerType> OnStateChanged;
+    public static event Action<string, Godot.Collections.Array> OnTournamentSelected;
     public static event Action OnBackButtonPressed;
 
     public static void RaiseBackButtonPressed() => OnBackButtonPressed?.Invoke();
+    public static void RaiseTournamentSelected(
+        string date,
+        Godot.Collections.Array tournament
+    ) => OnTournamentSelected?.Invoke(date, tournament);
     public static void RaiseFirebaseError(string error) => Debug.Print(error);
 
     public override void _Ready()
@@ -80,6 +85,8 @@ public partial class MainViewController : PanelContainer
 
         OnStateChanged?.Invoke(newState);
     }
+
+    public string GetUserId() { return userId; }
 
     private void NotifyBackButtonPressed()
     {

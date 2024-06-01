@@ -14,6 +14,7 @@ script = ExtResource("1_l3qys")
 backBtn = NodePath("BackButton")
 noHistoryLabel = NodePath("NoHistoryLabel")
 tournamentPrefab = NodePath("TournamentBtn")
+container = 5
 
 [node name="HTTPRequest_Tournaments" type="HTTPRequest" parent="."]
 use_threads = true
