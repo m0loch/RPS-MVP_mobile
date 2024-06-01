@@ -1,13 +1,12 @@
 using Godot;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 public partial class HistoryScreen : UIContainer
 {
     [Export] private Label noHistoryLabel;
     [Export] private Button tournamentPrefab;
 
+    private List<Button> discardableButtons = new List<Button>();
     private Dictionary<string, Godot.Collections.Array> tournaments = new();
 
     public override void OnProfileLoaded()
@@ -15,6 +14,17 @@ public partial class HistoryScreen : UIContainer
         HttpRequest httpRequest = GetNode<HttpRequest>("HTTPRequest_Tournaments");
 
         httpRequest.Request($"{APICfg.tournaments}/?playerId={stateMachine.GetUserId()}");
+    }
+
+    public override void OnProfileUnloaded()
+    {
+        foreach (var item in discardableButtons)
+        {
+            RemoveChild(item);
+            item.QueueFree();
+        }
+
+        discardableButtons.Clear();
     }
 
     private void OnLoadCompleted(long result, long responseCode, string[] headers, byte[] body)
@@ -56,6 +66,7 @@ public partial class HistoryScreen : UIContainer
             newCtrl.Text = buttonLabel;
             newCtrl.Connect("pressed", Callable.From(() => OnTournamentBtnPressed(newCtrl)));
             AddChild(newCtrl);
+            discardableButtons.Add(newCtrl);
 
             // Back button should always be the last control
             MoveChild(newCtrl, newCtrl.GetIndex() - 1);

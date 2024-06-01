@@ -10,6 +10,8 @@ public partial class UIContainer : Container
 
     public virtual void OnProfileLoaded() { }
 
+    public virtual void OnProfileUnloaded() { }
+
     public virtual void OnCancel()
     {
         stateMachine.SwitchState(ContainerType.MainMenu);

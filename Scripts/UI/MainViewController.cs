@@ -50,6 +50,11 @@ public partial class MainViewController : PanelContainer
         if (userId.Length == 0)
         {
             SwitchState(ContainerType.Login);
+
+            // Notify logout
+            foreach (var container in containers.Values) {
+                container.OnProfileUnloaded();
+            }
         }
         else if (currentState == ContainerType.None || currentState == ContainerType.Login)
         {
