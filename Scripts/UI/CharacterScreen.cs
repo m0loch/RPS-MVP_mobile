@@ -8,7 +8,6 @@ public partial class CharacterScreen : UIContainer
     [Export] private OptionButton clanSelector;
     [Export] private Button saveBtn;
 
-    private string userId;
     private string currentUserName;
     private int currentClan;
 
@@ -20,12 +19,11 @@ public partial class CharacterScreen : UIContainer
         saveBtn.Pressed += OnSaveBtnPressed;
     }
 
-    public override void OnProfileLoaded(string userId)
+    public override void OnProfileLoaded()
     {
-        this.userId = userId;
         HttpRequest httpRequest = GetNode<HttpRequest>("HTTPRequest_Profile");
 
-        string url = $"{APICfg.profile}/?id={userId}";
+        string url = $"{APICfg.profile}/?id={stateMachine.GetUserId()}";
         httpRequest.Request(url);
     }
 
@@ -97,10 +95,10 @@ public partial class CharacterScreen : UIContainer
     {
         HttpRequest httpRequest = GetNode<HttpRequest>("HTTPRequest_Save");
 
-        string url = $"{APICfg.profile}/?id={userId}";
+        string url = $"{APICfg.profile}/?id={stateMachine.GetUserId()}";
         
         var obj = new Godot.Collections.Dictionary();
-        obj["id"] = userId;
+        obj["id"] = stateMachine.GetUserId();
         obj["userName"] = nameField.Text;
         obj["clan"] = clanSelector.Selected;
 

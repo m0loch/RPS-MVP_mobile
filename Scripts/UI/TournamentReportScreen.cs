@@ -5,7 +5,6 @@ using System.Collections.Generic;
 public partial class TournamentReportScreen : UIContainer
 {
     [Export] private Label textLabel;
-    [Export] private Button backBtn;
 
     private List<Label> discardableLabels = new List<Label>();
 
@@ -14,7 +13,6 @@ public partial class TournamentReportScreen : UIContainer
         base._Ready();
 
         MainViewController.OnTournamentSelected += OnTournamentSelected;
-        backBtn.Pressed += OnCancel;
     }
 
     private void OnTournamentSelected(string date, Godot.Collections.Array data)

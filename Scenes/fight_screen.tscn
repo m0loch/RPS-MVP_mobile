@@ -14,10 +14,10 @@ theme_override_constants/separation = 50
 script = ExtResource("1_vokqx")
 nextTournamentLbl = NodePath("NextTournamentLabel")
 participateBtn = NodePath("ParticipateButton")
-backBtn = NodePath("BackButton")
 SignUpText = "SIGN UP"
 WithdrawText = "WITHDRAW"
 container = 4
+backBtn = NodePath("BackButton")
 
 [node name="HTTPRequest_NextTournament" type="HTTPRequest" parent="."]
 use_threads = true

@@ -12,8 +12,8 @@ grow_vertical = 2
 theme_override_constants/separation = 50
 script = ExtResource("1_l7c4h")
 textLabel = NodePath("TextLabel")
-backBtn = NodePath("BackButton")
 container = 6
+backBtn = NodePath("BackButton")
 
 [node name="Title" type="Label" parent="."]
 layout_mode = 2

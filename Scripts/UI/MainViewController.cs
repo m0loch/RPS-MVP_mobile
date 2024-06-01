@@ -55,7 +55,7 @@ public partial class MainViewController : PanelContainer
         {
             // Connection has just been performed
             foreach (var container in containers.Values) {
-                container.OnProfileLoaded(userId);
+                container.OnProfileLoaded();
             }
 
             SwitchState(ContainerType.MainMenu);

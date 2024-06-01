@@ -8,12 +8,9 @@ public partial class FightScreen : UIContainer
 
     [Export] private ToggleButton participateBtn;
 
-    [Export] private Button backBtn;
-
     [Export] private string SignUpText;
     [Export] private string WithdrawText;
 
-    private string userId;
     private bool isParticipating = false;
     private DateTime? nextDate = null;
 
@@ -21,21 +18,18 @@ public partial class FightScreen : UIContainer
     {
         base._Ready();
 
-        backBtn.Pressed += OnBackBtnPressed;
         participateBtn.Pressed += OnParticipateBtnPressed;
     }
 
-    public override void OnProfileLoaded(string userId)
+    public override void OnProfileLoaded()
     {
-        this.userId = userId;
-
         // Loads data for the next tournament
         HttpRequest httpRequest = GetNode<HttpRequest>("HTTPRequest_NextTournament");
         httpRequest.Request($"{APICfg.nextTournament}");
 
         // Loads registration, if any
         HttpRequest httpRequest2 = GetNode<HttpRequest>("HTTPRequest_Registration");
-        httpRequest2.Request($"{APICfg.registration}/?id={userId}");
+        httpRequest2.Request($"{APICfg.registration}/?id={stateMachine.GetUserId()}");
     }
 
     private void OnNextTournamentLoaded(long result, long responseCode, string[] headers, byte[] body)
@@ -89,7 +83,7 @@ public partial class FightScreen : UIContainer
     {
         HttpRequest httpRequest = GetNode<HttpRequest>("HTTPRequest_Registration");
         var obj = new Godot.Collections.Dictionary();
-        obj["id"] = userId;
+        obj["id"] = stateMachine.GetUserId();
 
         string payload = Json.Stringify(obj);
         string[] hdrs = new string[] { "Content-Type: application/json" };
@@ -101,10 +95,5 @@ public partial class FightScreen : UIContainer
             isParticipating ? HttpClient.Method.Delete : HttpClient.Method.Post,
             payload
         );
-    }
-
-    private void OnBackBtnPressed()
-    {
-        stateMachine.SwitchState(ContainerType.MainMenu);
     }
 }

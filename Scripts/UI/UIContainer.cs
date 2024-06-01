@@ -1,14 +1,14 @@
 using Godot;
-using System;
 using System.Diagnostics;
 
 public partial class UIContainer : Container
 {
     [Export] public ContainerType container { get; private set; }
+    [Export] private Button backBtn;
 
     protected MainViewController stateMachine;
 
-    public virtual void OnProfileLoaded(string userId) { }
+    public virtual void OnProfileLoaded() { }
 
     public virtual void OnCancel()
     {
@@ -20,6 +20,11 @@ public partial class UIContainer : Container
         base._Ready();
 
         stateMachine = GetParent<MainViewController>();
+
+        if (backBtn != null )
+        {
+            backBtn.Pressed += OnCancel;
+        }
     }
 
     public override void _Notification(int what)

@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scripts/UI/HistoryScreen.cs" id="1_l3qys"]
 [ext_resource type="Theme" uid="uid://y61pf7qtk7lm" path="res://Resources/basic_theme.tres" id="2_s3nf4"]
 
-[node name="HistoryScreen" type="VBoxContainer" node_paths=PackedStringArray("backBtn", "noHistoryLabel", "tournamentPrefab")]
+[node name="HistoryScreen" type="VBoxContainer" node_paths=PackedStringArray("noHistoryLabel", "tournamentPrefab", "backBtn")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -11,10 +11,10 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 50
 script = ExtResource("1_l3qys")
-backBtn = NodePath("BackButton")
 noHistoryLabel = NodePath("NoHistoryLabel")
 tournamentPrefab = NodePath("TournamentBtn")
 container = 5
+backBtn = NodePath("BackButton")
 
 [node name="HTTPRequest_Tournaments" type="HTTPRequest" parent="."]
 use_threads = true

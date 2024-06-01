@@ -5,26 +5,16 @@ using System.Diagnostics;
 
 public partial class HistoryScreen : UIContainer
 {
-    [Export] private Button backBtn;
     [Export] private Label noHistoryLabel;
     [Export] private Button tournamentPrefab;
 
-    private string userId;
     private Dictionary<string, Godot.Collections.Array> tournaments = new();
 
-    public override void _Ready()
+    public override void OnProfileLoaded()
     {
-        base._Ready();
-
-        backBtn.Pressed += OnBackBtnPressed;
-    }
-
-    public override void OnProfileLoaded(string userId)
-    {
-        this.userId = userId;
         HttpRequest httpRequest = GetNode<HttpRequest>("HTTPRequest_Tournaments");
 
-        httpRequest.Request($"{APICfg.tournaments}/?playerId={userId}");
+        httpRequest.Request($"{APICfg.tournaments}/?playerId={stateMachine.GetUserId()}");
     }
 
     private void OnLoadCompleted(long result, long responseCode, string[] headers, byte[] body)
@@ -70,11 +60,6 @@ public partial class HistoryScreen : UIContainer
             // Back button should always be the last control
             MoveChild(newCtrl, newCtrl.GetIndex() - 1);
         }
-    }
-
-    private void OnBackBtnPressed()
-    {
-        stateMachine.SwitchState(ContainerType.MainMenu);
     }
 
     private void OnTournamentBtnPressed(Button sender)
