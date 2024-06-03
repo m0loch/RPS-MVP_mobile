@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://cdg0wgnfipld3" path="res://Scenes/character_screen.tscn" id="6_ti0rs"]
 [ext_resource type="PackedScene" uid="uid://jl7336sn0y5" path="res://Scenes/fight_screen.tscn" id="7_84sto"]
 [ext_resource type="PackedScene" uid="uid://row7e3aotb7f" path="res://Scenes/history_screen.tscn" id="8_q2p3c"]
-[ext_resource type="PackedScene" uid="uid://bo1xnuf18n0wh" path="res://Scenes/tournament_report_screen.tscn" id="9_4mixg"]
+[ext_resource type="PackedScene" uid="uid://b4nmg1cb5adht" path="res://Scenes/tournament_report_screen.tscn" id="9_4mixg"]
 [ext_resource type="PackedScene" uid="uid://c0s2wkimx4yx4" path="res://Scenes/settings_screen.tscn" id="9_tel1q"]
 [ext_resource type="PackedScene" uid="uid://y38roygy3dxd" path="res://Scenes/training_screen.tscn" id="10_jo5jt"]
 [ext_resource type="Script" path="res://Scripts/UI/BackButton.cs" id="11_ctxk7"]

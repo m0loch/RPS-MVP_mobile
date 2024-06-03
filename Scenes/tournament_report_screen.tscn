@@ -1,17 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://bo1xnuf18n0wh"]
+[gd_scene load_steps=3 format=3 uid="uid://b4nmg1cb5adht"]
 
 [ext_resource type="Script" path="res://Scripts/UI/TournamentReportScreen.cs" id="1_l7c4h"]
 [ext_resource type="Theme" uid="uid://y61pf7qtk7lm" path="res://Resources/basic_theme.tres" id="2_mx5bo"]
 
-[node name="TournamentReportScreen" type="VBoxContainer" node_paths=PackedStringArray("textLabel", "backBtn")]
+[node name="TournamentReportScreen" type="VBoxContainer" node_paths=PackedStringArray("textLabel", "roundRecap", "backBtn")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 50
+theme_override_constants/separation = 20
 script = ExtResource("1_l7c4h")
 textLabel = NodePath("TextLabel")
+roundRecap = NodePath("ScrollContainer/VBoxContainer")
 container = 6
 backBtn = NodePath("BackButton")
 
@@ -25,9 +26,22 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme = ExtResource("2_mx5bo")
+theme_override_font_sizes/font_size = 25
 text = "Loading data..."
 horizontal_alignment = 1
 autowrap_mode = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+custom_minimum_size = Vector2(0, 400)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 30
 
 [node name="BackButton" type="Button" parent="."]
 layout_mode = 2

@@ -1,10 +1,12 @@
 using Godot;
 using Godot.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 public partial class TournamentReportScreen : UIContainer
 {
     [Export] private Label textLabel;
+    [Export] private Container roundRecap;
 
     private List<Label> discardableLabels = new List<Label>();
 
@@ -21,11 +23,8 @@ public partial class TournamentReportScreen : UIContainer
         foreach (var item in data) {
             var newLabel = textLabel.Duplicate() as Label;
             newLabel.Text = FormatRound(item.AsGodotDictionary());
-            AddChild(newLabel);
+            roundRecap.AddChild(newLabel);
             discardableLabels.Add(newLabel);
-
-            // Back button should always be the last control
-            MoveChild(newLabel, newLabel.GetIndex() - 1);
         }
     }
 
@@ -35,7 +34,7 @@ public partial class TournamentReportScreen : UIContainer
 
         foreach (var item in discardableLabels)
         {
-            RemoveChild(item);
+            roundRecap.RemoveChild(item);
             item.QueueFree();
         }
 
@@ -70,8 +69,7 @@ public partial class TournamentReportScreen : UIContainer
             var p2 = players[1].AsGodotDictionary();
             var winner = match["winner"].AsGodotDictionary();
             result += $"\"{p1["userName"]}\" of clan {Utils.GetClan((int)p1["clan"])}\nfought\n\"{p2["userName"]}\" of clan {Utils.GetClan((int)p2["clan"])}\n";
-            result += $"\n\"{winner["userName"]}\" of clan {Utils.GetClan((int)winner["clan"])} won its bout";
-
+            result += $"\"{winner["userName"]}\" of clan {Utils.GetClan((int)winner["clan"])} won its bout";
         }
         else 
         {
