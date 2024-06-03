@@ -1,8 +1,17 @@
-[gd_resource type="Theme" load_steps=3 format=3 uid="uid://y61pf7qtk7lm"]
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://y61pf7qtk7lm"]
 
 [ext_resource type="FontFile" uid="uid://bxlvtv04rwuyf" path="res://Assets/Retro Gaming.ttf" id="1_7h85y"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0aumr"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8hc73"]
+bg_color = Color(0.798, 0.95, 0.939867, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s6sli"]
+bg_color = Color(0.798, 0.95, 0.939867, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wfwgc"]
+bg_color = Color(0.798, 0.95, 0.939867, 1)
 
 [resource]
 resource_name = "Basic"
@@ -18,3 +27,6 @@ Label/constants/shadow_outline_size = 1
 Label/font_sizes/font_size = 40
 Label/fonts/font = ExtResource("1_7h85y")
 Label/styles/normal = SubResource("StyleBoxEmpty_0aumr")
+VScrollBar/styles/grabber = SubResource("StyleBoxFlat_8hc73")
+VScrollBar/styles/grabber_highlight = SubResource("StyleBoxFlat_s6sli")
+VScrollBar/styles/grabber_pressed = SubResource("StyleBoxFlat_wfwgc")

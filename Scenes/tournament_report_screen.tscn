@@ -35,6 +35,7 @@ autowrap_mode = 3
 custom_minimum_size = Vector2(0, 400)
 layout_mode = 2
 size_flags_vertical = 3
+theme = ExtResource("2_mx5bo")
 horizontal_scroll_mode = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
