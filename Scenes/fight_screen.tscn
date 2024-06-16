@@ -4,7 +4,7 @@
 [ext_resource type="Theme" uid="uid://y61pf7qtk7lm" path="res://Resources/basic_theme.tres" id="2_b8rlh"]
 [ext_resource type="Script" path="res://Scripts/UI/ToggleButton.cs" id="3_b8v10"]
 
-[node name="FightScreen" type="VBoxContainer" node_paths=PackedStringArray("nextTournamentLbl", "participateBtn", "backBtn")]
+[node name="FightScreen" type="VBoxContainer" node_paths=PackedStringArray("nextTournamentLbl", "participateBtn")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -17,7 +17,6 @@ participateBtn = NodePath("ParticipateButton")
 SignUpText = "SIGN UP"
 WithdrawText = "WITHDRAW"
 container = 4
-backBtn = NodePath("BackButton")
 
 [node name="HTTPRequest_NextTournament" type="HTTPRequest" parent="."]
 use_threads = true

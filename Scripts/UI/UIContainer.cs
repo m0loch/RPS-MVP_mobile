@@ -4,7 +4,7 @@ using System.Diagnostics;
 public partial class UIContainer : Container
 {
     [Export] public ContainerType container { get; private set; }
-    [Export] private Button backBtn;
+    [Export] private Button backArrowBtn;
 
     protected MainViewController stateMachine;
 
@@ -23,7 +23,13 @@ public partial class UIContainer : Container
 
         stateMachine = GetParent<MainViewController>();
 
-        if (backBtn != null )
+        if (backArrowBtn != null)
+        {
+            backArrowBtn.Pressed += OnCancel;
+        }
+
+        var backBtn = GetNode<Button>("BackButton");
+        if (backBtn != null)
         {
             backBtn.Pressed += OnCancel;
         }

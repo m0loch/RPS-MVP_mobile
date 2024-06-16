@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scripts/UI/TournamentReportScreen.cs" id="1_l7c4h"]
 [ext_resource type="Theme" uid="uid://y61pf7qtk7lm" path="res://Resources/basic_theme.tres" id="2_mx5bo"]
 
-[node name="TournamentReportScreen" type="VBoxContainer" node_paths=PackedStringArray("textLabel", "roundRecap", "backBtn")]
+[node name="TournamentReportScreen" type="VBoxContainer" node_paths=PackedStringArray("textLabel", "roundRecap")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -14,7 +14,6 @@ script = ExtResource("1_l7c4h")
 textLabel = NodePath("TextLabel")
 roundRecap = NodePath("ScrollContainer/VBoxContainer")
 container = 6
-backBtn = NodePath("BackButton")
 
 [node name="Title" type="Label" parent="."]
 layout_mode = 2
