@@ -64,12 +64,13 @@ script = ExtResource("2_uui0a")
 parent = NodePath("..")
 manager = NodePath("../FirebaseManager")
 
-[node name="LoginPanel" type="VBoxContainer" parent="MainView"]
+[node name="LoginPanel" type="VBoxContainer" parent="MainView" node_paths=PackedStringArray("backBtn")]
 visible = false
 layout_mode = 2
 theme_override_constants/separation = 50
 script = ExtResource("3_r87le")
 container = 1
+backBtn = NodePath("../../BackButton")
 
 [node name="EmailField" type="LineEdit" parent="MainView/LoginPanel"]
 unique_name_in_owner = true
@@ -114,7 +115,7 @@ theme = ExtResource("4_spket")
 theme_override_font_sizes/font_size = 24
 autowrap_mode = 3
 
-[node name="MainMenu" type="VBoxContainer" parent="MainView" node_paths=PackedStringArray("characterBtn", "fightBtn", "historyBtn", "trainingBtn", "settingsBtn")]
+[node name="MainMenu" type="VBoxContainer" parent="MainView" node_paths=PackedStringArray("characterBtn", "fightBtn", "historyBtn", "trainingBtn", "settingsBtn", "backBtn")]
 visible = false
 layout_mode = 2
 size_flags_vertical = 4
@@ -126,6 +127,7 @@ historyBtn = NodePath("History")
 trainingBtn = NodePath("Train")
 settingsBtn = NodePath("Settings")
 container = 2
+backBtn = NodePath("../../BackButton")
 
 [node name="Title" type="Label" parent="MainView/MainMenu"]
 layout_mode = 2
@@ -171,29 +173,35 @@ theme = ExtResource("4_spket")
 theme_override_constants/outline_size = 0
 text = "LOG OUT"
 
-[node name="CharacterScreen" parent="MainView" instance=ExtResource("6_ti0rs")]
+[node name="CharacterScreen" parent="MainView" node_paths=PackedStringArray("backBtn") instance=ExtResource("6_ti0rs")]
 visible = false
 layout_mode = 2
+backBtn = NodePath("../../BackButton")
 
-[node name="FightScreen" parent="MainView" instance=ExtResource("7_84sto")]
+[node name="FightScreen" parent="MainView" node_paths=PackedStringArray("backBtn") instance=ExtResource("7_84sto")]
 visible = false
 layout_mode = 2
+backBtn = NodePath("../../BackButton")
 
-[node name="HistoryScreen" parent="MainView" instance=ExtResource("8_q2p3c")]
+[node name="HistoryScreen" parent="MainView" node_paths=PackedStringArray("backBtn") instance=ExtResource("8_q2p3c")]
 visible = false
 layout_mode = 2
+backBtn = NodePath("../../BackButton")
 
-[node name="TournamentReportScreen" parent="MainView" instance=ExtResource("9_4mixg")]
+[node name="TournamentReportScreen" parent="MainView" node_paths=PackedStringArray("backBtn") instance=ExtResource("9_4mixg")]
 visible = false
 layout_mode = 2
+backBtn = NodePath("../../BackButton")
 
-[node name="TrainingScreen" parent="MainView" instance=ExtResource("10_jo5jt")]
+[node name="TrainingScreen" parent="MainView" node_paths=PackedStringArray("backBtn") instance=ExtResource("10_jo5jt")]
 visible = false
 layout_mode = 2
+backBtn = NodePath("../../BackButton")
 
-[node name="SettingsScreen" parent="MainView" instance=ExtResource("9_tel1q")]
+[node name="SettingsScreen" parent="MainView" node_paths=PackedStringArray("backBtn") instance=ExtResource("9_tel1q")]
 visible = false
 layout_mode = 2
+backBtn = NodePath("../../BackButton")
 
 [node name="BackButton" type="Button" parent="."]
 custom_minimum_size = Vector2(60, 60)
